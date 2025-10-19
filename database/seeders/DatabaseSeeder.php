@@ -2,8 +2,11 @@
 
 namespace Database\Seeders;
 
-use App\Models\User;
+use App\Models\Course;
+use App\Models\Student;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Teacher;
+use DB;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -13,11 +16,20 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
+        // $this->call(UserSeeder::class);
+        $this->call(TeacherSeeder::class);
+        $this->call(StudentSeeder::class);
+        $this->call(CourseSeeder::class);
+        $this->call(GradeSeeder::class);
 
-        User::factory()->create([
-            'name' => 'Mohamed BENIANE',
-            'email' => 'beniane39@gmail.com',
-        ]);
+        $students = Student::all();
+        $ids = Teacher::all('id');
+        
+        $students->each(fn($student) => $student->teachers()->attach($ids));
+
+        $ids = Course::all('id');
+        $students->each(function ($student) use ($ids) {
+            $student->courses()->attach($ids);
+        });
     }
 }
