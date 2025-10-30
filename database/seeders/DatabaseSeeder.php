@@ -19,12 +19,12 @@ class DatabaseSeeder extends Seeder
         // $this->call(UserSeeder::class);
         $this->call(TeacherSeeder::class);
         $this->call(StudentSeeder::class);
-        $this->call(CourseSeeder::class);
+        // $this->call(CourseSeeder::class);
         $this->call(GradeSeeder::class);
 
         $students = Student::all();
         $ids = Teacher::all('id');
-        
+
         $students->each(fn($student) => $student->teachers()->attach($ids));
 
         $ids = Course::all('id');

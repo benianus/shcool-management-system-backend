@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Models\Teacher;
 use Illuminate\Foundation\Http\FormRequest;
 
 class StoreTeacherRequest extends FormRequest
@@ -9,10 +10,10 @@ class StoreTeacherRequest extends FormRequest
     /**
      * Determine if the user is authorized to make this request.
      */
-    public function authorize(): bool
-    {
-        return false;
-    }
+    // public function authorize(): bool
+    // {
+    //     return true;
+    // }
 
     /**
      * Get the validation rules that apply to the request.
@@ -23,6 +24,8 @@ class StoreTeacherRequest extends FormRequest
     {
         return [
             //
+            'name' => ['required', 'string', 'min:3'],
+            'email' => ['required', 'string', 'email']
         ];
     }
 }
