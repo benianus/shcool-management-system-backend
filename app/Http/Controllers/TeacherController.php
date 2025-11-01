@@ -71,6 +71,7 @@ class TeacherController extends Controller
     public function update(UpdateTeacherRequest $request, Teacher $teacher)
     {
         //
+        dd($request);
     }
 
     /**
