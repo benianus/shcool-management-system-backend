@@ -14,9 +14,9 @@ Route::get('/', function () {
     ]);
 });
 
-require __DIR__ . '/models/teachers.php';
-require __DIR__ . '/models/students.php';
-require __DIR__ . '/models/courses.php';
-require __DIR__ . '/models/grades.php';
-require __DIR__ . '/models/attendances.php';
-require __DIR__ . '/models/events.php';
+require __DIR__ . '/apis/teachers.php';
+require __DIR__ . '/apis/students.php';
+require __DIR__ . '/apis/courses.php';
+require __DIR__ . '/apis/grades.php';
+require __DIR__ . '/apis/attendances.php';
+require __DIR__ . '/apis/events.php';

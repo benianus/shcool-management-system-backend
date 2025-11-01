@@ -20,22 +20,9 @@ class TeacherController extends Controller
     use AuthorizesRequests;
     public function index()
     {
-        //
-        $page = request()->query('page') ;
-        $pageSize = request()->query('limit') ;
-        $teachers = DB::select('CALL `GetTeachers`(?, ?);', [$page, $pageSize]);
-
-        return response()->json($teachers);
-    }
-    /**
-     * Display a listing of the resource.
-     */
-    public function filterBySearchWord()
-    {
-        //
         $filter = request()->query('name') ?? '';
-        $page = request()->query('page');
-        $limit = request()->query('limit');
+        $page = request()->query('page') ?? 1;
+        $limit = request()->query('limit') ?? 9;
         $teachers = DB::select('CALL `FilterTeachersBySearchWord`(?, ?, ?)', [
             $filter,
             $page,
@@ -49,8 +36,9 @@ class TeacherController extends Controller
      */
     public function store(StoreTeacherRequest $request)
     {
+        // dd($request);
         $attributes = $request->validated();
-        $user = User::where('email', $request->user)->first('id');
+        $user = User::where('email', '=', $request->user)->first('id');
         $course = Course::where('name', '=', $request->input('course'))
             ->first('id');
 
@@ -70,7 +58,11 @@ class TeacherController extends Controller
      */
     public function show(Teacher $teacher)
     {
-        //
+        return response()->json([
+            'name' => $teacher->name,
+            'email' => $teacher->email,
+            'course' => $teacher->course->name
+        ]);
     }
 
     /**
