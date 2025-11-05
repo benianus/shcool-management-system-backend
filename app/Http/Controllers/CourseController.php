@@ -16,6 +16,7 @@ class CourseController extends Controller
     {
         //
         $courses = Course::all(['id', 'name']);
+
         // $courses = DB::select('SELECT id, name FROM `courses`');
         return response()->json($courses);
     }

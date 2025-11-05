@@ -8,8 +8,6 @@ use App\Models\Course;
 use App\Models\Teacher;
 use App\Models\User;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class TeacherController extends Controller
@@ -18,19 +16,26 @@ class TeacherController extends Controller
      * Display a listing of the resource.
      */
     use AuthorizesRequests;
+
     public function index()
     {
         $filter = request()->query('name') ?? '';
         $page = request()->query('page') ?? 1;
-        $limit = request()->query('limit') ?? 9;
+        $perPage = request()->query('limit') ?? 9;
+
         $teachers = DB::select('CALL `FilterTeachersBySearchWord`(?, ?, ?)', [
             $filter,
             $page,
-            $limit
+            $perPage,
         ]);
+
+        // $teachers = Teacher::with('course')
+        // ->latest()
+        // ->paginate($perPage);
 
         return response()->json($teachers);
     }
+
     /**
      * Store a newly created resource in storage.
      */
@@ -47,7 +52,7 @@ class TeacherController extends Controller
             'email' => $attributes['email'],
             'status' => false,
             'user_id' => $user->id,
-            'course_id' => $course->id
+            'course_id' => $course->id,
         ]);
 
         return response()->json($teacher, 201);
@@ -59,9 +64,11 @@ class TeacherController extends Controller
     public function show(Teacher $teacher)
     {
         return response()->json([
+            'id' => $teacher->id,
             'name' => $teacher->name,
             'email' => $teacher->email,
-            'course' => $teacher->course->name
+            'status' => $teacher->status,
+            'course' => $teacher->course->name,
         ]);
     }
 
@@ -71,7 +78,27 @@ class TeacherController extends Controller
     public function update(UpdateTeacherRequest $request, Teacher $teacher)
     {
         //
-        dd($request);
+        // dd($teacher);
+        $attributes = $request->validated();
+        $course = Course::where('name', '=', $request->input('course'))
+            ->first('id');
+
+        $isUpdated = $teacher->update([
+            'name' => $attributes['name'],
+            'email' => $attributes['email'],
+            'course_id' => $course->id,
+        ]);
+
+        if ($isUpdated) {
+            // code...
+            return response()->json([
+                'message' => 'Teacher updated successfully',
+            ], 200);
+        }
+
+        return response()->json([
+            'message' => 'Teacher failed to update', 400,
+        ]);
     }
 
     /**

@@ -11,7 +11,7 @@ class UpdateTeacherRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -23,6 +23,8 @@ class UpdateTeacherRequest extends FormRequest
     {
         return [
             //
+            'name' => ['string', 'min:3'],
+            'email' => ['string', 'email'],
         ];
     }
 }

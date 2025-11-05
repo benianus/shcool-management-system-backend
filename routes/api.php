@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\TeacherController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -14,9 +13,9 @@ Route::get('/', function () {
     ]);
 });
 
-require __DIR__ . '/apis/teachers.php';
-require __DIR__ . '/apis/students.php';
-require __DIR__ . '/apis/courses.php';
-require __DIR__ . '/apis/grades.php';
-require __DIR__ . '/apis/attendances.php';
-require __DIR__ . '/apis/events.php';
+require __DIR__.'/apis/teachers.php';
+require __DIR__.'/apis/students.php';
+require __DIR__.'/apis/courses.php';
+require __DIR__.'/apis/grades.php';
+require __DIR__.'/apis/attendances.php';
+require __DIR__.'/apis/events.php';

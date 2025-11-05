@@ -6,7 +6,6 @@ use App\Models\Course;
 use App\Models\Student;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use App\Models\Teacher;
-use DB;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -25,7 +24,7 @@ class DatabaseSeeder extends Seeder
         $students = Student::all();
         $ids = Teacher::all('id');
 
-        $students->each(fn($student) => $student->teachers()->attach($ids));
+        $students->each(fn ($student) => $student->teachers()->attach($ids));
 
         $ids = Course::all('id');
         $students->each(function ($student) use ($ids) {

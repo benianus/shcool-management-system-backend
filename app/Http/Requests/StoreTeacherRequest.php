@@ -2,7 +2,6 @@
 
 namespace App\Http\Requests;
 
-use App\Models\Teacher;
 use Illuminate\Foundation\Http\FormRequest;
 
 class StoreTeacherRequest extends FormRequest
@@ -25,7 +24,7 @@ class StoreTeacherRequest extends FormRequest
         return [
             //
             'name' => ['required', 'string', 'min:3'],
-            'email' => ['required', 'string', 'email']
+            'email' => ['required', 'string', 'email'],
         ];
     }
 }

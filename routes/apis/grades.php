@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\CourseController;
 use App\Http\Controllers\GradeController;
 
 Route::get('/grades', [GradeController::class, 'index']);
