@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreTeacherRequest;
@@ -68,7 +70,7 @@ class TeacherController extends Controller
             'name' => $teacher->name,
             'email' => $teacher->email,
             'status' => $teacher->status,
-            'course' => $teacher->course->name,
+            'class' => $teacher->course->name,
         ]);
     }
 
@@ -107,5 +109,16 @@ class TeacherController extends Controller
     public function destroy(Teacher $teacher)
     {
         //
+        $isDeleted = $teacher->delete();
+
+        if ($isDeleted) {
+            return response()->json([
+                'message' => 'Teacher deleted successfully',
+            ], 200);
+        }
+
+        return response()->json([
+            'message' => 'Failed to delete teacher, try again!',
+        ]);
     }
 }
