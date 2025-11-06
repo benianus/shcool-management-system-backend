@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('email');
             $table->string('birthdate');
             $table->boolean('status');
-            $table->foreignIdFor(User::class);
+            $table->foreignIdFor(User::class)->constrained()->cascadeOnDelete();
             $table->softDeletes();
             $table->timestamps();
         });

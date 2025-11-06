@@ -16,8 +16,8 @@ return new class extends Migration
         Schema::create('attendances', function (Blueprint $table) {
             $table->id();
             $table->dateTime('attendance_date');
-            $table->foreignIdFor(Course::class);
-            $table->foreignIdFor(Student::class);
+            $table->foreignIdFor(Course::class)->constrained()->cascadeOnDelete();
+            $table->foreignIdFor(Student::class)->constrained()->cascadeOnDelete();
             $table->softDeletes();
             $table->timestamps();
         });

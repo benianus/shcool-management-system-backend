@@ -18,8 +18,8 @@ return new class extends Migration
             $table->string('name');
             $table->string('email');
             $table->boolean('status')->default(false);
-            $table->foreignIdFor(User::class);
-            $table->foreignIdFor(Course::class);
+            $table->foreignIdFor(User::class)->constrained()->cascadeOnDelete();
+            $table->foreignIdFor(Course::class)->constrained()->cascadeOnDelete();
             $table->softDeletes();
             $table->timestamps();
         });
