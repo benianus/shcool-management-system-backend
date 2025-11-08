@@ -1,18 +1,19 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Auth;
 
+use App\Models\User;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\Rules;
 
-class StoreTeacherRequest extends FormRequest
+class RegisterRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
     {
-        return Auth::check();
+        return true;
     }
 
     /**
@@ -23,9 +24,9 @@ class StoreTeacherRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
-            'name' => ['required', 'string', 'min:3'],
-            'email' => ['required', 'string', 'email'],
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
+            'password' => ['required', 'confirmed', Rules\password::defaults()],
         ];
     }
 }

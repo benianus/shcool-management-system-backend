@@ -31,11 +31,8 @@ class TeacherController extends Controller
             $perPage,
         ]);
 
-        // $teachers = Teacher::with('course')
-        // ->latest()
-        // ->paginate($perPage);
-
         return response()->json($teachers);
+        // return Teacher::with(['course'])->latest()->paginate(9);
     }
 
     /**

@@ -4,6 +4,7 @@ namespace App\Policies;
 
 use App\Models\Teacher;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 
 class TeacherPolicy
 {
@@ -28,7 +29,7 @@ class TeacherPolicy
      */
     public function create(User $user): bool
     {
-        return true;
+        return Auth::check();
     }
 
     /**
@@ -36,7 +37,7 @@ class TeacherPolicy
      */
     public function update(User $user, Teacher $teacher): bool
     {
-        return false;
+        return $user->id == $teacher->user_id;
     }
 
     /**
@@ -44,7 +45,7 @@ class TeacherPolicy
      */
     public function delete(User $user, Teacher $teacher): bool
     {
-        return false;
+        return $user->id === $teacher->user_id;
     }
 
     /**
