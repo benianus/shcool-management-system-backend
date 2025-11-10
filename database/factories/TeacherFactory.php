@@ -22,7 +22,7 @@ class TeacherFactory extends Factory
             'email' => fake()->email(),
             'status' => fake()->boolean(),
             'user_id' => 1,
-            'course_id' => random_int(1, 10),
+            'course_id' => fake()->unique()->numberBetween(1,10),
         ];
     }
 }

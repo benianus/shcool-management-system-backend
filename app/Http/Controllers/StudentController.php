@@ -14,6 +14,13 @@ class StudentController extends Controller
     public function index()
     {
         //
+        $search = request()->query('search') ?? '';
+        $perPage = request()->query('per_page') ?? 9;
+        // dd($search, $perPage);
+        $students = Student::with(['courses', 'grades'])->latest()->paginate(1);
+
+        // dd($students);
+        return response()->json($students);
     }
 
     /**
