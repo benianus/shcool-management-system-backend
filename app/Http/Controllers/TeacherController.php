@@ -32,7 +32,6 @@ class TeacherController extends Controller
         ]);
 
         return response()->json($teachers);
-        // return Teacher::with(['course'])->latest()->paginate(9);
     }
 
     /**

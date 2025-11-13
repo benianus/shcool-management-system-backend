@@ -23,6 +23,8 @@ class UpdateStudentRequest extends FormRequest
     {
         return [
             //
+            'name' => ['string', 'min:3', 'max:255'],
+            'email' => ['string', 'email']
         ];
     }
 }

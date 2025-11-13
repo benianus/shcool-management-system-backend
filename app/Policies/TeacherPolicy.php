@@ -20,7 +20,7 @@ class TeacherPolicy
      */
     public function view(User $user, Teacher $teacher): bool
     {
-        return $user->id === $teacher->user_id;
+        return true;
     }
 
     /**

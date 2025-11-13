@@ -10,7 +10,13 @@ class Student extends Model
 {
     /** @use HasFactory<\Database\Factories\StudentFactory> */
     use HasFactory, SoftDeletes;
-
+    protected $fillable = [
+        'name',
+        'email',
+        'birthdate',
+        'status',
+        'user_id'
+    ];
     public function teachers()
     {
         return $this->belongsToMany(Teacher::class);

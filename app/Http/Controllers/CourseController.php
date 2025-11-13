@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreCourseRequest;
 use App\Http\Requests\UpdateCourseRequest;
 use App\Models\Course;
-use Illuminate\Support\Facades\DB;
+use DB;
 
 class CourseController extends Controller
 {
@@ -14,10 +14,25 @@ class CourseController extends Controller
      */
     public function index()
     {
-        //
-        $courses = Course::all(['id', 'name']);
+        $search = request()->query('search') ?? '';
+        $perPage = request()->query('per_page') ?? 9;
 
-        // $courses = DB::select('SELECT id, name FROM `courses`');
+        $courses = DB::table('courses')
+            ->select([
+                'courses.id',
+                'courses.name',
+                DB::raw('group_concat(distinct teachers.name SEPARATOR " - ") as teacher_name'),
+                DB::raw(value: 'count(course_student.student_id) as students_enrolled'),
+            ])
+            ->join('course_student', 'courses.id', '=', 'course_student.course_id')
+            ->join('teachers', 'teachers.course_id', '=', 'courses.id')
+            ->groupBy([
+                'courses.id',
+                'courses.name',
+            ])
+            ->having('courses.name', 'like', '%'.$search.'%')
+            ->paginate($perPage);
+
         return response()->json($courses);
     }
 
